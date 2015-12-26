@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Developing Data Products Course</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Developing Data Products Course">
+  <meta name="author" content="Mario Melchiori">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Developing Data Products Course</h1>
+    <h2>Course Project</h2>
+    <p>Mario Melchiori<br/>25/12/2015</p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Introduction</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>As part of the Coursera Specialization, it is mandatory first, to create a Shiny application and deploy it on Rstudio server. Second, to use Slidify or Rstudio Presenter to prepare a reproducible pitch presentation about your application. This document accomplishes the second part and contains supporting documentation for  users can start with the application created.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Predict WHITE MALE systolic blood pressure (SBP)</h2>
+  </hgroup>
+  <article data-timings="">
+    <style>
+strong {
+  font-weight: bold;
+}
+</style>
+
+<p>We use a <strong>hypothetical sample</strong>, of 32 <strong>white males</strong> over 40 years old  from the town of <strong>Angina</strong>, to create the model. The dataset is available from <a href="https://d396qusza40orc.cloudfront.net/appliedregression/Homeworks/week2-HW-data.csv">here</a> </p>
+
+<h3>Variables</h3>
+
+<ol>
+<li><strong>SBP</strong> stand for systolic blood pressure, in mmHg;</li>
+<li><strong>QUET</strong> equal to: <strong>\[\ 100 * weight (kgs)/ height (meters)^2 / 703.1\]</strong></li>
+<li><strong>AGE</strong> (Age in years) and;</li>
+<li><strong>SMK</strong> = 0 if nonsmoker, <strong>SMK</strong> = 1 if a current or previous smoker.<br></li>
+</ol>
+
+<p>The Quetelet Index <strong>QUET</strong> is a historical metric for body mass index <strong>BMI</strong>. 
+<strong>BMI = QUET/100 * 703.1 links</strong> <strong>QUET</strong> to <strong>BMI</strong>.   </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>The prediction algorithm</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>The prediction algorithm is based on a multivariate linear regression model of the data in dataset using the AGE, SMK and QUET variables.</p>
+
+<pre><code class="r"># fitting linear model
+summary(model &lt;- lm(SBP ~ AGE + SMK + QUET,  data= data))$coef
+</code></pre>
+
+<pre><code>##              Estimate Std. Error  t value     Pr(&gt;|t|)
+## (Intercept) 45.103192 10.7648751 4.189848 0.0002520770
+## AGE          1.212715  0.3238192 3.745036 0.0008288266
+## SMK          9.945568  2.6560565 3.744486 0.0008300320
+## QUET         8.592449  4.4986812 1.909993 0.0664267764
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Example</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>New data given by the user, for instance:</p>
+
+<pre><code class="r">Weight &lt;- 86
+Height &lt;- 1.73
+AGE &lt;- 56
+SMK &lt;- 0
+QUET &lt;- Weight/Height^2/703.1*100
+</code></pre>
+
+<pre><code class="r"> predict(model,newdata=data.frame(AGE=AGE,SMK=SMK,QUET=QUET),interval = &quot;conf&quot;)
+</code></pre>
+
+<pre><code>##        fit      lwr     upr
+## 1 148.1313 141.9856 154.277
+</code></pre>
+
+<p>We can get the predicted value and lower and upper confidence interval for the predicted value.</p>
+
+<h3><strong><em>Caution:</em></strong> We use a hypothetical white male over 40 years old dataset.</h3>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Introduction'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Predict WHITE MALE systolic blood pressure (SBP)'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='The prediction algorithm'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Example'>
+         4
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script> -->
+  <script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
