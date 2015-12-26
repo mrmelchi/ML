@@ -1,0 +1,7 @@
+name: Publish Document
+account: rpubs
+server: rpubs.com
+bundleId:
+        https://api.rpubs.com/api/v1/document/137199/a2bd5286bfd542288e19e59d6098007a
+url: http://rpubs.com/mrmelchi/137199
+when: 1451120133.06953
